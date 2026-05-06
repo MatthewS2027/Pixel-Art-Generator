@@ -10,20 +10,24 @@ namespace PixelArtGenerator.Infrastructure
 
         // Create class instance and call constructor
         private readonly HttpClient _http;
+        private readonly string _apiToken;
 
-        public ApiClient()
+        public ApiClient(string apiToken)
         {
             _http = new HttpClient();
+            _apiToken = apiToken ?? throw new System.ArgumentNullException(nameof(apiToken));
         }
         // -------------------------
 
 
         public async Task<string> GenerateImage(string description, int width = 128, int height = 128)
         {
+
+            
+
             // url holds PixelLab's specific endpoint for their "Pixflux" image generation model
             var url = "https://api.pixellab.ai/v1/generate-image-pixflux";
             // The API token is a secret key that proves your app is authorized to use their service
-            var apiToken = "YOUR_API_TOKEN_HERE";
 
             // ----------------------------------------
             // This section of the method create and serialize the payload into a JSON file
@@ -46,7 +50,7 @@ namespace PixelArtGenerator.Infrastructure
             // This section of the method will create and send the HTTP request
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);     // POST is an http method used to send information to a specified source
-            request.Headers.Add("Authorization", $"Bearer {apiToken}");     // REST API verifies identity
+            request.Headers.Add("Authorization", $"Bearer {_apiToken}");     // REST API verifies identity
 
             //The JSON string is sent as the request body, encoded in UTF8, and labeled as 'application/json'
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");       
@@ -71,7 +75,7 @@ namespace PixelArtGenerator.Infrastructure
             return result;
 
             // -----------------------------------------
-            
+
         }
     }
 }
