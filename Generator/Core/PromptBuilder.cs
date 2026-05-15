@@ -3,43 +3,24 @@ namespace PixelArtGenerator.Core
 {
     public class PromptBuilder
     {
-        private string _subject = string.Empty;
-        private string _style = string.Empty;
-        private string _detail = string.Empty;
-        private string _mood = string.Empty;
-        private string _composition = string.Empty;
+        private string _description = string.Empty;
+        private string _imageSize = string.Empty;
         private string _palette = string.Empty;
-        private string _extra = string.Empty;
+        private string _detail = string.Empty;
+        private string _direction = string.Empty;
+        private string _orientation = string.Empty;
 
         public static PromptBuilder Create() => new PromptBuilder();
 
-        public PromptBuilder WithSubject(string subject)
+        public PromptBuilder WithDescription(string description)
         {
-            _subject = subject?.Trim() ?? string.Empty;
+            _description = description?.Trim() ?? string.Empty;
             return this;
         }
 
-        public PromptBuilder WithStyle(string style)
+        public PromptBuilder WithImageSize(string imageSize)
         {
-            _style = style?.Trim() ?? string.Empty;
-            return this;
-        }
-
-        public PromptBuilder WithDetail(string detail)
-        {
-            _detail = detail?.Trim() ?? string.Empty;
-            return this;
-        }
-
-        public PromptBuilder WithMood(string mood)
-        {
-            _mood = mood?.Trim() ?? string.Empty;
-            return this;
-        }
-
-        public PromptBuilder WithComposition(string composition)
-        {
-            _composition = composition?.Trim() ?? string.Empty;
+            _imageSize = imageSize?.Trim() ?? string.Empty;
             return this;
         }
 
@@ -49,9 +30,21 @@ namespace PixelArtGenerator.Core
             return this;
         }
 
-        public PromptBuilder WithExtra(string extra)
+        public PromptBuilder WithDetail(string detail)
         {
-            _extra = extra?.Trim() ?? string.Empty;
+            _detail = detail?.Trim() ?? string.Empty;
+            return this;
+        }
+
+        public PromptBuilder WithSubjectDirection(string direction)
+        {
+            _direction = direction?.Trim() ?? string.Empty;
+            return this;
+        }
+
+        public PromptBuilder WithOrientation(string orientation)
+        {
+            _orientation = orientation?.Trim() ?? string.Empty;
             return this;
         }
 
@@ -59,42 +52,22 @@ namespace PixelArtGenerator.Core
         {
             var parts = new System.Collections.Generic.List<string>();
 
-            if (!string.IsNullOrWhiteSpace(_subject))
-            {
-                parts.Add(_subject);
-            }
-
-            if (!string.IsNullOrWhiteSpace(_style))
-            {
-                parts.Add(_style);
-            }
-
-            if (!string.IsNullOrWhiteSpace(_detail))
-            {
-                parts.Add(_detail);
-            }
-
-            if (!string.IsNullOrWhiteSpace(_mood))
-            {
-                parts.Add(_mood);
-            }
-
-            if (!string.IsNullOrWhiteSpace(_composition))
-            {
-                parts.Add(_composition);
-            }
-
-            if (!string.IsNullOrWhiteSpace(_palette))
-            {
-                parts.Add(_palette);
-            }
-
-            if (!string.IsNullOrWhiteSpace(_extra))
-            {
-                parts.Add(_extra);
-            }
+            AddField(parts, "Text description", _description);
+            AddField(parts, "Image size", _imageSize);
+            AddField(parts, "Colors", _palette);
+            AddField(parts, "Level of detail", _detail);
+            AddField(parts, "Subject direction", _direction);
+            AddField(parts, "Orientation", _orientation);
 
             return string.Join(", ", parts);
+        }
+
+        private static void AddField(System.Collections.Generic.List<string> parts, string name, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                parts.Add($"{name} = {value}");
+            }
         }
     }
 }

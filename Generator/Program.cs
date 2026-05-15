@@ -22,20 +22,31 @@ class Program
 
         var client = new ApiClient(apiKey);
 
-        Console.WriteLine("Enter pixel art subject or scene:");
-        string? subject = Console.ReadLine();
+        Console.WriteLine("Enter the text description of the pixel art:");
+        string? description = Console.ReadLine();
 
-        Console.WriteLine("Enter a style (or leave blank for default):");
-        string? style = Console.ReadLine();
+        Console.WriteLine("Enter image size (eg. 128x128, 256x256):");
+        string? imageSize = Console.ReadLine();
 
-        // Each method fills in one field and returns 'this', allowing for chaining
+        Console.WriteLine("Enter colors or a color palette (comma-separated hex codes) or leave blank for AI to decide:");
+        string? palette = Console.ReadLine();
+
+        Console.WriteLine("Enter level of detail (eg. simple, medium detail, highly detailed):");
+        string? detail = Console.ReadLine();
+
+        Console.WriteLine("Enter subject direction (which way it is facing, eg. facing right, facing forward, facing away):");
+        string? subjectDirection = Console.ReadLine();
+
+        Console.WriteLine("Enter orientation or camera perspective (eg. top-down, sidescroller, isometric, side view):");
+        string? orientation = Console.ReadLine();
+
         var prompt = PromptBuilder.Create()
-            .WithSubject(subject ?? string.Empty)
-            .WithStyle(string.IsNullOrWhiteSpace(style)
-                ? "pixel art, flat colors, clean lines, cartoonish character design"
-                : style)
-            .WithDetail("monotone color palette, simple shapes, glowing elements")
-            .WithMood("ominous, mysterious, eerie")
+            .WithDescription(description ?? string.Empty)
+            .WithImageSize(imageSize ?? string.Empty)
+            .WithColorPalette(palette ?? string.Empty)
+            .WithDetail(detail ?? string.Empty)
+            .WithSubjectDirection(subjectDirection ?? string.Empty)
+            .WithOrientation(orientation ?? string.Empty)
             .Build();
 
         Console.WriteLine($"Built prompt: {prompt}");
