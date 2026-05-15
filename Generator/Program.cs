@@ -32,10 +32,10 @@ class Program
         var prompt = PromptBuilder.Create()
             .WithSubject(subject ?? string.Empty)
             .WithStyle(string.IsNullOrWhiteSpace(style)
-                ? "pixel art, flat colors, clean lines, charming character design"
+                ? "pixel art, flat colors, clean lines, cartoonish character design"
                 : style)
-            .WithDetail("high contrast, simple shapes, vivid palette")
-            .WithMood("cheerful and playful")
+            .WithDetail("monotone color palette, simple shapes, glowing elements")
+            .WithMood("ominous, mysterious, eerie")
             .Build();
 
         Console.WriteLine($"Built prompt: {prompt}");
